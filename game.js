@@ -5,7 +5,7 @@ kaboom({
     debug: true,
 })
 
-screen("game", () =>{
+scene("game", () =>{
 
 
 })
