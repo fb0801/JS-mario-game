@@ -153,6 +153,16 @@ const JUMP_FORCE = 360
              }
          })
 
+            player.collides('mushroom', (m) => {
+                destroy(m)//remove obj
+                player.biggify(6) //duration to be big
+            })
+
+            player.collides('coin', (c) => {
+                destroy(c)
+                scoreLabel.value++
+                scoreLabel.text = scoreLabel.value //make score be shown
+            })
 
           keyDown('left', ()=>{
               player.move(-MOVE_SPEED,0) //speed plasyer moves
