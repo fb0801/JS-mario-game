@@ -10,7 +10,7 @@ const MOVE_SPEED = 120
 const JUMP_FORCE = 360
 let CURRENT_JUMP_FORCE = JUMP_FORCE
 const BIG_JUMP_FORCE= 550
-
+let isJumping = true
 
 
     loadRoot('https://i.imgur.com/')
@@ -33,7 +33,7 @@ const BIG_JUMP_FORCE= 550
     loadSprite('blue-evil-shroom', 'SvV4ueD.png')
     loadSprite('blue-surprise', 'RMqCc1G.png')
 
-    scene("game", () =>{
+    scene("game", ({score}) =>{
         layers(['bg','obj','ui'],'obj')
         
         const maps = [
@@ -174,8 +174,11 @@ const BIG_JUMP_FORCE= 550
             })
 
             player.collides('dangerous', (d) => {
-                go('lose', {score: scoreLabel.value})
-                
+                if (isJumping){
+                    destroy(d)
+                }else{
+                    go('lose', {score: scoreLabel.value})
+                }
             })
 
             const ENEMY_SPEED = 20
@@ -191,8 +194,16 @@ const BIG_JUMP_FORCE= 550
           keyDown('right', ()=>{
             player.move(MOVE_SPEED,0) //speed plasyer moves
         })
+
+        player.action(() =>{
+            if(player.grounded()){
+                isJumping  = false
+            }
+        })
+
         keyPress('space',() =>{
             if(player.grounded()){
+                isJumping = true
                 player.jump(CURRENT_JUMP_FORCE)
             }
         })
@@ -202,4 +213,4 @@ scene('lose', ({score }) => {
     add([text(score, 32), origin('center'), pos(width()/2, height()/2 )])
 })
 
-start("game")
+start("game", {score:0})
