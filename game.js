@@ -20,7 +20,7 @@ kaboom({
     loadSprite('pipe-bottom-left', 'c1cYSbt.png')
     loadSprite('pipe-bottom-right', 'nqQ79eI.png')
     
-    loadSprite('blue-block', 'fVscIbn.png')
+   loadSprite('blue-block', 'fVscIbn.png')
     loadSprite('blue-brick', '3e5YRQd.png')
     loadSprite('blue-steel', 'gqVoI2b.png')
     loadSprite('blue-evil-shroom', 'SvV4ueD.png')
@@ -58,8 +58,33 @@ kaboom({
           const levelCfg = {
               width: 20,
               height: 20,
-              '=':[sprite('block')] //uses the block img
-          }
+              '=':[sprite('block', solid())], //uses the block img
+              '$':[sprite('coin')],
+              '%':[sprite('surprise'), solid(), 'coin-surprised'],
+              '*':[sprite('surprise'), solid(), 'mushroom-surprised'],
+              '}': [sprite('unboxed'), solid()],
+              '(': [sprite('pipe-bottom-left'), solid(), scale(0.5)],
+              ')': [sprite('pipe-bottom-right'), solid(), scale(0.5)],
+              '-': [sprite('pipe-top-left'), solid(), scale(0.5), 'pipe'],
+              '+': [sprite('pipe-top-right'), solid(), scale(0.5), 'pipe'],
+              '^': [sprite('evil-shroom'), solid(), 'dangerous'],
+              '#': [sprite('mushroom'), solid(), 'mushroom', body()],
+              '!': [sprite('blue-block'), solid(), scale(0.5)],
+              '£': [sprite('blue-brick'), solid(), scale(0.5)],
+              'z': [sprite('blue-evil-shroom'), solid(), scale(0.5), 'dangerous'],
+              '@': [sprite('blue-surprise'), solid(), scale(0.5), 'coin-surprise'],
+              'x': [sprite('blue-steel'), solid(), scale(0.5)],
+          
+          
+          
+            }
 
+          const gameLevel = addLevel(map, levelCfg)
+
+
+          const player = add([
+              sprite('mario')
+          ])
 })
+
 start("game")
