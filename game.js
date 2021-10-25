@@ -11,6 +11,7 @@ const JUMP_FORCE = 360
 let CURRENT_JUMP_FORCE = JUMP_FORCE
 const BIG_JUMP_FORCE= 550
 let isJumping = true
+const FALL_DEATH = 400
 
 
     loadRoot('https://i.imgur.com/')
@@ -178,6 +179,13 @@ let isJumping = true
                     destroy(d)
                 }else{
                     go('lose', {score: scoreLabel.value})
+                }
+            })
+
+            player.action(() => {
+                camPos(player.pos) //follows the character like a camera
+                if(player.pos.y >= FALL_DEATH) {
+                    go('lose', { score: scoreLabel.value})
                 }
             })
 
