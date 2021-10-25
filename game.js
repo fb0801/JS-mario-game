@@ -34,7 +34,7 @@ const FALL_DEATH = 400
     loadSprite('blue-evil-shroom', 'SvV4ueD.png')
     loadSprite('blue-surprise', 'RMqCc1G.png')
 
-    scene("game", ({score}) =>{
+    scene("game", ({level, score}) =>{
         layers(['bg','obj','ui'],'obj')
         
         const maps = [
@@ -87,7 +87,7 @@ const FALL_DEATH = 400
           
             }
 
-          const gameLevel = addLevel(map, levelCfg)
+          const gameLevel = addLevel(maps[level], levelCfg)
 
           const scoreLabel = add([
                 text(score),
@@ -98,7 +98,7 @@ const FALL_DEATH = 400
                 }
             ])
 
-            add([text('level' + 'test', pos(4,6))]) //position of the text
+            add([text('level' + parseInt(level + 1)), pos(40,6)]) //position of the text
 
 
             function big(){
@@ -194,6 +194,14 @@ const FALL_DEATH = 400
                 d.move(-ENEMY_SPEED,0)
             })
 
+            player.collides('pipe', () => {
+                keyPress('down', () => {
+                    go('game', {
+                        level: (level + 1) % maps.length,
+                        score: scoreLabel.value
+                    })//move to the next lvl
+                })
+            })
 
           keyDown('left', ()=>{
               player.move(-MOVE_SPEED,0) //speed plasyer moves
@@ -221,4 +229,4 @@ scene('lose', ({score }) => {
     add([text(score, 32), origin('center'), pos(width()/2, height()/2 )])
 })
 
-start("game", {score:0})
+start("game", {level:0, score:0})
