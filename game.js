@@ -117,7 +117,7 @@ const JUMP_FORCE = 360
                         timer = 0
                         isBig = false
                     },
-                    biggify(){
+                    biggify(time){
                         //make mario bigger
                         this.scale =vec2(2)
                         timer = time
@@ -131,10 +131,27 @@ const JUMP_FORCE = 360
               sprite('mario'), solid(),
               pos(30,0),
               body(),
+              big(),
               origin('bot')
           ])
 
-         
+          action('mushroom', (m) => {
+              m.move(20,0) //make mushroom move
+          })
+
+         player.on("headbump", (obj) => {
+             //make obj come out of the box
+             if (obj.is('coin-surprise')){
+                gameLevel.spawn('$', obj.gridPos.sub(0,1))
+                destroy(obj) //removes the box from the game
+                gameLevel.spawn('}', obj.gridPos.sub(0,0)) //makes the box change to other box
+             }
+             if (obj.is('mushroom-surprise')){
+                gameLevel.spawn('#', obj.gridPos.sub(0,1))
+                destroy(obj) //removes the box from the game
+                gameLevel.spawn('}', obj.gridPos.sub(0,0)) //makes the box change to other box
+             }
+         })
 
 
           keyDown('left', ()=>{
