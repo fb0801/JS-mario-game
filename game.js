@@ -7,7 +7,7 @@ kaboom({
 })
 
 const MOVE_SPEED = 120
-const JUMP_FORCE = 10
+const JUMP_FORCE = 360
 
     loadRoot('https://i.imgur.com/')
     loadSprite('coin', 'wbKxhcd.png')
