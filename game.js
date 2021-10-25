@@ -6,6 +6,9 @@ kaboom({
     clearColor: [0,0,0,1],
 })
 
+const MOVE_SPEED = 120
+const JUMP_FORCE = 10
+
     loadRoot('https://i.imgur.com/')
     loadSprite('coin', 'wbKxhcd.png')
     loadSprite('evil-shroom', 'KPO3fR9.png')
@@ -82,15 +85,15 @@ kaboom({
           const gameLevel = addLevel(map, levelCfg)
 
           const scoreLabel = add([
-                text(score),
+                text('test'),
                 pos(30,6),
                 layer('ui'),
                 {
                     value: 'test',
                 }
             ])
-            
-            add([text('level' + 'test', pos(4,6))])
+
+            add([text('level' + 'test', pos(4,6))]) //position of the text
 
           const player = add([
               sprite('mario'), solid(),
@@ -98,6 +101,22 @@ kaboom({
               body(),
               origin('bot')
           ])
+
+         
+
+
+          keyDown('left', ()=>{
+              player.move(-MOVE_SPEED,0) //speed plasyer moves
+          })
+
+          keyDown('right', ()=>{
+            player.move(MOVE_SPEED,0) //speed plasyer moves
+        })
+        keyPress('space',() =>{
+            if(player.grounded()){
+                player.jump(JUMP_FORCE)
+            }
+        })
 })
 
 start("game")
