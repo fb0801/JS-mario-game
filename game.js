@@ -89,11 +89,11 @@ const BIG_JUMP_FORCE= 550
           const gameLevel = addLevel(map, levelCfg)
 
           const scoreLabel = add([
-                text('test'),
+                text(score),
                 pos(30,6),
                 layer('ui'),
                 {
-                    value: 'test',
+                    value: score,
                 }
             ])
 
@@ -173,6 +173,17 @@ const BIG_JUMP_FORCE= 550
                 scoreLabel.text = scoreLabel.value //make score be shown
             })
 
+            player.collides('dangerous', (d) => {
+                go('lose', {score: scoreLabel.value})
+                
+            })
+
+            const ENEMY_SPEED = 20
+            action('dangerous',(d) =>{
+                d.move(-ENEMY_SPEED,0)
+            })
+
+
           keyDown('left', ()=>{
               player.move(-MOVE_SPEED,0) //speed plasyer moves
           })
@@ -185,6 +196,10 @@ const BIG_JUMP_FORCE= 550
                 player.jump(CURRENT_JUMP_FORCE)
             }
         })
+})
+
+scene('lose', ({score }) => {
+    add([text(score, 32), origin('center'), pos(width()/2, height()/2 )])
 })
 
 start("game")
