@@ -95,6 +95,38 @@ const JUMP_FORCE = 360
 
             add([text('level' + 'test', pos(4,6))]) //position of the text
 
+
+            function big(){
+                let timer = 0
+                let isBig = false
+                return {
+                    update(){
+                        if (isBig){
+                            timer -=dt()
+                            if(timer <=0){
+                                this.smallify()
+                            }
+                        }
+                    },
+                    isBig(){
+                        return isBig
+                    },
+                    smallify(){
+                        //make mario smaller
+                        this.scale =vec2(1)
+                        timer = 0
+                        isBig = false
+                    },
+                    biggify(){
+                        //make mario bigger
+                        this.scale =vec2(2)
+                        timer = time
+                        isBig = true
+                    }
+                }
+            }
+
+
           const player = add([
               sprite('mario'), solid(),
               pos(30,0),
