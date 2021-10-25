@@ -8,6 +8,10 @@ kaboom({
 
 const MOVE_SPEED = 120
 const JUMP_FORCE = 360
+let CURRENT_JUMP_FORCE = JUMP_FORCE
+const BIG_JUMP_FORCE= 550
+
+
 
     loadRoot('https://i.imgur.com/')
     loadSprite('coin', 'wbKxhcd.png')
@@ -102,6 +106,8 @@ const JUMP_FORCE = 360
                 return {
                     update(){
                         if (isBig){
+                            CURRENT_JUMP_FORCE = BIG_JUMP_FORCE 
+
                             timer -=dt()
                             if(timer <=0){
                                 this.smallify()
@@ -114,12 +120,15 @@ const JUMP_FORCE = 360
                     smallify(){
                         //make mario smaller
                         this.scale =vec2(1)
+                        CURRENT_JUMP_FORCE = JUMP_FORCE 
+
                         timer = 0
                         isBig = false
                     },
                     biggify(time){
                         //make mario bigger
                         this.scale =vec2(2)
+
                         timer = time
                         isBig = true
                     }
@@ -173,7 +182,7 @@ const JUMP_FORCE = 360
         })
         keyPress('space',() =>{
             if(player.grounded()){
-                player.jump(JUMP_FORCE)
+                player.jump(CURRENT_JUMP_FORCE)
             }
         })
 })
